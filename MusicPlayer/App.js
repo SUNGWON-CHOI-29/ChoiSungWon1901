@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import TrackPlayer from 'react-native-track-player';
 import { TouchableWithoutFeedback, StyleSheet, Text, View, Image} from 'react-native';
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -14,6 +13,17 @@ const styles = StyleSheet.create({
     height: 200,
   },
 });
+class MyPlayerBar extends TrackPlayer.ProgressComponent {
+
+    render() {
+        return (
+            <View>
+                <Text>{this.state.position}</Text>
+            </View>
+        );
+    }
+
+}
 
 class ImageButton extends Component {
   render() {
@@ -32,10 +42,31 @@ class ImageButton extends Component {
 export default class FirstView extends Component {
   state = { isSelected: false}
 
+  componentDidMount() {
+    TrackPlayer.setupPlayer().then(async () => {
+      TrackPlayer.add({
+          id: 'sound',
+          url: require('./assets/sound.mp3'),
+          title: 'Unknown',
+          artist: 'Unknown'
+        });
+    });
+    // TrackPlayer.addEventListener('playback-state', async (data) => {
+    //     const state = await TrackPlayer.getState();
+    //     console.warn({state})
+    //   });
+    TrackPlayer.addEventListener('playback-queue-ended', async (data) => {
+        TrackPlayer.seekTo(0)
+        this.setState(previousState => (
+          {isSelected: false}
+          ))
+      });
+  }
   _onPressButtonFromParent = () => {
      this.setState(previousState => (
        {isSelected: !previousState.isSelected}
        ))
+     this.state.isSelected == false? TrackPlayer.play() : TrackPlayer.pause()
   }
   render() {
     return (
@@ -44,6 +75,7 @@ export default class FirstView extends Component {
       // What if you add `height: 300` instead of `flex: 1`?
       <View style={styles.container}>
         <ImageButton onPressButton= {()=> this._onPressButtonFromParent()} isSelected= {this.state.isSelected} />
+        <MyPlayerBar/>
       </View>
     );
   }
