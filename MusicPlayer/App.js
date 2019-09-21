@@ -14,15 +14,20 @@ const styles = StyleSheet.create({
   },
 });
 class MyPlayerBar extends TrackPlayer.ProgressComponent {
-
     render() {
+      _currentTime= ()=>{
+        const minute = parseInt(this.state.position/60).toFixed(0).toString().padStart(2,"0")
+        const second = parseInt(this.state.position%60).toFixed(0).toString().padStart(2,"0")
+        const milsec =  parseInt((this.state.position%1)*100).toFixed(0).toString().padStart(2,"0")
+        return `${minute}:${second}:${milsec}`
+      }
+      // console.warn({currentTime})
         return (
             <View>
-                <Text>{this.state.position}</Text>
+                <Text>{_currentTime()}</Text>
             </View>
         );
     }
-
 }
 
 class ImageButton extends Component {
