@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer from 'react-native-track-player'; 
 import { TouchableWithoutFeedback, StyleSheet, Text, View, Image} from 'react-native';
 
 
