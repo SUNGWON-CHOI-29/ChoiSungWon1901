@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TrackPlayer from 'react-native-track-player';
-import { TouchableWithoutFeedback, StyleSheet, Text, View, Image} from 'react-native';
+import { ProgressViewIOS,TouchableWithoutFeedback, StyleSheet, Text, View, Image} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,6 +12,10 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
+  progressBar: {
+    width: undefined,
+    paddingTop: 20,
+  }
 });
 class MyPlayerBar extends TrackPlayer.ProgressComponent {
     _currentTime= ()=>{
@@ -25,6 +29,9 @@ class MyPlayerBar extends TrackPlayer.ProgressComponent {
         return (
             <View>
                 <Text>{this._currentTime()}</Text>
+                <ProgressViewIOS style={styles.progressBar}
+                progress = {this.getProgress()}
+                />
             </View>
         );
     }
@@ -75,9 +82,6 @@ export default class FirstView extends Component {
   }
   render() {
     return (
-      // Try removing the `flex: 1` on the parent View.
-      // The parent will not have dimensions, so the children can't expand.
-      // What if you add `height: 300` instead of `flex: 1`?
       <View style={styles.container}>
         <ImageButton onPressButton= {()=> this._onPressButtonFromParent()} isSelected= {this.state.isSelected} />
         <MyPlayerBar/>
