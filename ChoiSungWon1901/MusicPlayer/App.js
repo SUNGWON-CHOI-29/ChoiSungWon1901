@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TrackPlayer from 'react-native-track-player';
-import { ProgressViewIOS,TouchableWithoutFeedback, StyleSheet, Text, View, Image} from 'react-native';
+import Slider from '@react-native-community/slider';
+import { TouchableWithoutFeedback, StyleSheet, Text, View, Image} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,11 +10,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   imageButton: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
   },
-  progressBar: {
-    width: undefined,
+  Slider: {
     paddingTop: 20,
   }
 });
@@ -28,10 +28,14 @@ class MyPlayerBar extends TrackPlayer.ProgressComponent {
       // console.warn({currentTime})
         return (
             <View>
-                <Text>{this._currentTime()}</Text>
-                <ProgressViewIOS style={styles.progressBar}
-                progress = {this.getProgress()}
-                />
+              <Text>{this._currentTime()}</Text>
+              <Slider
+              style={styles.slider}
+              minimumValue={0}
+              maximumValue={1}
+              minimumTrackTintColor="#FFFFFF"
+              maximumTrackTintColor="#000000"
+              />
             </View>
         );
     }
