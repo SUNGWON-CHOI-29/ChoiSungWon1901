@@ -14,17 +14,17 @@ const styles = StyleSheet.create({
   },
 });
 class MyPlayerBar extends TrackPlayer.ProgressComponent {
+    _currentTime= ()=>{
+    const minute = parseInt(this.state.position/60).toString().padStart(2,"0")
+    const second = parseInt(this.state.position%60).toString().padStart(2,"0")
+    const milsec =  parseInt((this.state.position%1)*100).toString().padStart(2,"0")
+    return `${minute}:${second}:${milsec}`
+    }
     render() {
-      _currentTime= ()=>{
-        const minute = parseInt(this.state.position/60).toFixed(0).toString().padStart(2,"0")
-        const second = parseInt(this.state.position%60).toFixed(0).toString().padStart(2,"0")
-        const milsec =  parseInt((this.state.position%1)*100).toFixed(0).toString().padStart(2,"0")
-        return `${minute}:${second}:${milsec}`
-      }
       // console.warn({currentTime})
         return (
             <View>
-                <Text>{_currentTime()}</Text>
+                <Text>{this._currentTime()}</Text>
             </View>
         );
     }
