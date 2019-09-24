@@ -24,8 +24,11 @@ class MyPlayerBar extends TrackPlayer.ProgressComponent {
     const milsec =  parseInt((this.state.position%1)*100).toString().padStart(2,"0")
     return `${minute}:${second}:${milsec}`
     }
+    _progressToTime= (progress)=>{
+      console.warn({progress})
+    }
     render() {
-      // console.warn({currentTime})
+      // console.warn(this._currentTime())
         return (
             <View>
               <Text>{this._currentTime()}</Text>
@@ -33,8 +36,11 @@ class MyPlayerBar extends TrackPlayer.ProgressComponent {
               style={styles.slider}
               minimumValue={0}
               maximumValue={1}
-              minimumTrackTintColor="#FFFFFF"
-              maximumTrackTintColor="#000000"
+              minimumTrackTintColor={'red'}
+              maximumTrackTintColor={'black'}
+              onSlidingComplete={value => this._progressToTime(value)}
+              // onSlidingComplete={value => TrackPlayer.seekTo(0)}
+              value = {this.getProgress()}
               />
             </View>
         );
@@ -64,7 +70,8 @@ export default class FirstView extends Component {
           id: 'sound',
           url: require('./assets/sound.mp3'),
           title: 'Unknown',
-          artist: 'Unknown'
+          artist: 'Unknown',
+          duration: 9.37
         });
     });
     // TrackPlayer.addEventListener('playback-state', async (data) => {
@@ -87,8 +94,8 @@ export default class FirstView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ImageButton onPressButton= {()=> this._onPressButtonFromParent()} isSelected= {this.state.isSelected} />
-        <MyPlayerBar/>
+        <ImageButton style={{flex: 1}} onPressButton= {()=> this._onPressButtonFromParent()} isSelected= {this.state.isSelected} />
+        <MyPlayerBar style={{flex: 1}} />
       </View>
     );
   }
