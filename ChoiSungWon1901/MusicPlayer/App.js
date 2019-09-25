@@ -25,7 +25,11 @@ class MyPlayerBar extends TrackPlayer.ProgressComponent {
     return `${minute}:${second}:${milsec}`
     }
     _progressToTime= (progress)=>{
-      console.warn({progress})
+        TrackPlayer.getDuration().then(
+          duration=>{
+            const time = duration/100*progress*100
+            TrackPlayer.seekTo(time)
+        })
     }
     render() {
       // console.warn(this._currentTime())
@@ -38,9 +42,8 @@ class MyPlayerBar extends TrackPlayer.ProgressComponent {
               maximumValue={1}
               minimumTrackTintColor={'red'}
               maximumTrackTintColor={'black'}
-              onSlidingComplete={value => this._progressToTime(value)}
-              // onSlidingComplete={value => TrackPlayer.seekTo(0)}
               value = {this.getProgress()}
+              onSlidingComplete={value => this._progressToTime(value)}
               />
             </View>
         );
