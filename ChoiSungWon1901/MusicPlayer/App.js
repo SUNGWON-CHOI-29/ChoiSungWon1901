@@ -6,14 +6,19 @@ import { TouchableWithoutFeedback, StyleSheet, Text, View, Image} from 'react-na
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
   },
   imageButton: {
+    alignSelf: "center",
     width: 150,
     height: 150,
   },
-  Slider: {
+  sliderText: {
+    alignSelf: "center",
+    paddingTop: 10,
+    fontSize: 20,
+  },
+  slider: {
     paddingTop: 20,
   }
 });
@@ -35,7 +40,7 @@ class MyPlayerBar extends TrackPlayer.ProgressComponent {
       // console.warn(this._currentTime())
         return (
             <View>
-              <Text>{this._currentTime()}</Text>
+              <Text style={styles.sliderText}>{this._currentTime()}</Text>
               <Slider
               style={styles.slider}
               minimumValue={0}
@@ -97,8 +102,9 @@ export default class FirstView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ImageButton style={{flex: 1}} onPressButton= {()=> this._onPressButtonFromParent()} isSelected= {this.state.isSelected} />
-        <MyPlayerBar style={{flex: 1}} />
+        <ImageButton  onPressButton= {()=> this._onPressButtonFromParent()}
+                      isSelected= {this.state.isSelected} />
+        <MyPlayerBar/>
       </View>
     );
   }
